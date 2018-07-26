@@ -12,7 +12,11 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     const svcSpy = jasmine.createSpyObj<HeroService>(['getHeroes']);
-    svcSpy.getHeroes.and.returnValue(of([]));
+    svcSpy.getHeroes.and.returnValue(of([
+      {id: 0, name: 'Atta Boy'},
+      {id: 1, name: 'Thatsmy Girl'},
+      {id: 2, name: 'Soccer Mom'},
+    ]));
 
     TestBed.configureTestingModule({
       declarations: [DashboardComponent, HeroSearchComponent],
@@ -33,5 +37,13 @@ describe('DashboardComponent', () => {
 
   it('should be created', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should skip the first hero', () => {
+    expect(component.heroes).toEqual([{id: 1, name: 'Thatsmy Girl'}, {id: 2, name: 'Soccer Mom'}]);
+  });
+
+  it('should display 1 link', () => {
+    expect(fixture.nativeElement.querySelectorAll('a').length).toBe(2);
   });
 });
