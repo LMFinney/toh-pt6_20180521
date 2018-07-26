@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
+import { HeroService } from '../hero.service';
 import { HeroSearchComponent } from './hero-search.component';
 
 describe('HeroSearchComponent', () => {
@@ -7,8 +9,14 @@ describe('HeroSearchComponent', () => {
   let fixture: ComponentFixture<HeroSearchComponent>;
 
   beforeEach(async(() => {
+    const svcSpy = jasmine.createSpyObj<HeroService>(['']);
+
     TestBed.configureTestingModule({
-      declarations: [HeroSearchComponent]
+      declarations: [HeroSearchComponent],
+      imports: [RouterTestingModule.withRoutes([])],
+      providers: [
+        { provide: HeroService, useValue: svcSpy }
+      ]
     })
       .compileComponents();
   }));
